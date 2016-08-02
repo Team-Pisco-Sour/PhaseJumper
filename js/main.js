@@ -15,7 +15,6 @@ function preload() {
     //Load all assets
     game.load.tilemap('level1', 'assets/level1.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.tilemap('level2', 'assets/level2.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('tiles-1', 'assets/tiles-1.png');
     game.load.image('tiles-2', 'assets/tiles-2.png');
     game.load.spritesheet('player', 'assets/player.png', 32, 48);
     game.load.image('background', 'assets/background2.png');
@@ -47,8 +46,8 @@ function create() {
 
     //Set no collision with specific titles from titlemap
     map.setCollisionByExclusion([
-        12, 13, 14, 15, 16, 46, 47, 48, 49, 50,
-        80, 81, 82, 83, 84, 114, 115, 116, 117, 118,
+        12, 13, 14, 15, 16, 17, 46, 47, 48, 49, 50, 51,
+        80, 81, 82, 83, 84,85, 114, 115, 116, 117, 118, 119,
         136, 137, 138, 139, 140,
         153, 154, 155, 156, 157,
         170, 171, 172, 173, 174,
