@@ -48,7 +48,11 @@ function create() {
     //Set no collision with specific titles from titlemap
     map.setCollisionByExclusion([
         12, 13, 14, 15, 16, 46, 47, 48, 49, 50,
-        80, 81, 82, 83, 84, 114, 115, 116, 117, 118
+        80, 81, 82, 83, 84, 114, 115, 116, 117, 118,
+        136, 137, 138, 139,
+        153, 154, 155, 156,
+        170, 171, 172, 173,
+        187, 188, 189, 190
     ]);
     //Create a layer with all of the above
     layer = map.createLayer('Tile Layer 1');
