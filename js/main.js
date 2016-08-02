@@ -17,12 +17,7 @@ function preload() {
     game.load.tilemap('level2', 'assets/level2.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('tiles-1', 'assets/tiles-1.png');
     game.load.image('tiles-2', 'assets/tiles-2.png');
-
     game.load.spritesheet('player', 'assets/player.png', 32, 48);
-    game.load.spritesheet('droid', 'assets/droid.png', 32, 32);
-    game.load.spritesheet('mummy', 'assets/metalslug_mummy37x45.png', 37, 45, 18);
-    game.load.image('starSmall', 'assets/star.png');
-    game.load.image('starBig', 'assets/star2.png');
     game.load.image('background', 'assets/background2.png');
 }
 
@@ -34,8 +29,7 @@ var map,
     jumpTimer = 0,
     cursors,
     jumpButton,
-    bg,
-    playerInAir = false;
+    bg;
 
 function create() {
     //Init physics
@@ -52,8 +46,10 @@ function create() {
     map.addTilesetImage('tiles-2');
 
     //Set no collision with specific titles from titlemap
-    map.setCollisionByExclusion([12, 13, 14, 15, 16, 46, 47, 48, 49, 50,
-        80, 81, 82, 83, 84, 114, 115, 116, 117, 118]);
+    map.setCollisionByExclusion([
+        12, 13, 14, 15, 16, 46, 47, 48, 49, 50,
+        80, 81, 82, 83, 84, 114, 115, 116, 117, 118
+    ]);
     //Create a layer with all of the above
     layer = map.createLayer('Tile Layer 1');
 
@@ -89,11 +85,6 @@ function update() {
     //Reset player velocity
     player.body.velocity.x = 0;
 
-    //Check if player has landed on floor
-    if (player.body.blocked.down) {
-        playerInAir = false;
-    }
-
     if (cursors.left.isDown) {
         //Move player left
         player.body.velocity.x = -playerHorizontalVelocity;
@@ -124,7 +115,7 @@ function update() {
 
             facing = 'idle';
         }
-        else if (!playerInAir) {
+        else if (player.body.blocked.down) {
             player.animations.play('idle');
         }
     }
@@ -132,7 +123,6 @@ function update() {
     if (jumpButton.isDown && player.body.onFloor() && game.time.now > jumpTimer) {
         player.body.velocity.y = -playerJumpVelocity;
         jumpTimer = game.time.now + timeBetweenJumps;
-        playerInAir = true;
     }
 
 }
@@ -142,5 +132,4 @@ function render() {
     // game.debug.text(game.time.physicsElapsed, 32, 32);
     // game.debug.body(player);
     // game.debug.bodyInfo(player, 16, 24);
-
 }
