@@ -4,7 +4,7 @@ const playerJumpVelocity = 520,
     timeBetweenJumps = 750,
     runBoost = 100;
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game'); // Phaser engine initialization
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game', false, false, false); // Phaser engine initialization
 //Define Scenes/States in Phaser
 game.state.add('Boot', Scene.Boot); // scene to start loading game assets.
 game.state.add('Preloader', Scene.Preloader); // loading game assets
