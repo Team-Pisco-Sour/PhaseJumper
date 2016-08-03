@@ -16,7 +16,7 @@ Scene.Level1 = function (game) {
     this.physics;   //  the physics manager
     this.rnd;       //  the repeatable random number generator
     this.map;       //  a reference to the game map
-    this.layer;     //  a reference to current layer
+    this.mapTileLayer;     //  a reference to current mapTileLayer
     this.player;    //  a reference to player
     this.facing = 'left';    //  player facing - left right or idle
     this.jumpTimer = 0;      //  jump frequency tracking var
@@ -24,7 +24,7 @@ Scene.Level1 = function (game) {
     this.jumpButton;        // a reference to SPACEBAR
     this.runButton;         // a reference to SHIFT
     this.bg;                // background
-    this.isGameStarted = true;
+    this.isGamePaused = false;
 
     //  You can use any of these from any function within this scene.
 };
@@ -53,14 +53,14 @@ Scene.Level1.prototype = {
             170, 171, 172, 173, 174,
             187, 188, 189, 190, 191
         ]);
-        //Create a layer with all of the above
-        this.layer = this.map.createLayer('Tile Layer 1');
+        //Create a mapTileLayer with all of the above
+        this.mapTileLayer = this.map.createLayer('Tile Layer 1');
 
         //  Un-comment this on to see the collision tiles
-        // layer.debug = true;
+        // mapTileLayer.debug = true;
 
         //Resize the world to fit level
-        this.layer.resizeWorld();
+        this.mapTileLayer.resizeWorld();
         //Set gravity
         game.physics.arcade.gravity.y = 800;
         //Add player
@@ -85,10 +85,10 @@ Scene.Level1.prototype = {
     },
 
     update: function () {
-        if (!this.isGameStarted) return;
+        if (this.isGamePaused) return;
 
-        //Add collision between player and map titles
-        game.physics.arcade.collide(this.player, this.layer);
+        //Check collision between player and map titles
+        game.physics.arcade.collide(this.player, this.mapTileLayer);
         //Reset player velocity
         this.player.body.velocity.x = 0;
         var boost = 0;
@@ -137,7 +137,7 @@ Scene.Level1.prototype = {
 
         if (this.player.body.y >= this.map.heightInPixels - this.player.body.height) {
             this.quitGame();
-            // this.isGameStarted = false;
+            // this.isGamePaused = false;
         }
 
     },
@@ -149,12 +149,12 @@ Scene.Level1.prototype = {
     },
 
     quitGame: function (pointer) {
-
-        //  Here you should destroy anything you no longer need.
-        //  Stop music, delete sprites, purge caches, free resources, all that good stuff.
+        //  Stop music, delete sprites, purge caches, free resources, etc.
         this.player.destroy();
         this.map.destroy();
-        //  Then let's go back to the main menu.
+        this.mapTileLayer.destroy();
+        this.bg.destroy();
+        //  Back to the main menu.
         this.state.start('MainMenu');
 
     }
